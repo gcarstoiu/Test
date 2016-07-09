@@ -1,0 +1,39 @@
+﻿*** Settings ***
+Library           Selenium2Library  0   5
+Library           String
+Library           ImapLibrary
+Library           SSHLibrary
+Library           XML
+Library           OperatingSystem
+Resource          ../Common/myvariables.txt
+Resource          ../Common/keywords_common_staging.robot
+
+*** Variables ***
+${country}      COM
+
+*** Keywords ***
+
+############# HEADER SECTION ##################### 
+
+Click Login-Logout Link At The Header
+    Click Element    xpath=//*[@id="user-navigation"]/ul/li[4]/a
+    Set Browser Implicit Wait    10
+
+Click Login Link At The Header
+    Go To    https://www-${environment}.nu3.com/customer/index/index/
+    Set Browser Implicit Wait    5
+	
+Click Header Links
+    Click Element    css=#trust-icons > li.post-free > a
+    Location Should Contain    /faq/#delivery	
+	
+Click Wishlist At The Header
+    Click Element    xpath=//*[@id="user-navigation"]/ul/li[3]/a	
+	
+Verify live search placeholder text
+	${search_placeholder}		Selenium2Library.Get Element Attribute         //*[@id="search"]@placeholder
+        ${search_placeholder_pattern}    Set Variable    Product Search…
+	Should Be Equal As Strings    ${search_placeholder}		${search_placeholder_pattern}	
+	
+
+
